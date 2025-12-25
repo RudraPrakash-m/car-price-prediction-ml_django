@@ -1,0 +1,125 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Car Price Predictor</title>
+    <link rel="stylesheet" href="{% static 'predictor/style.css' %}" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script
+      src="https://kit.fontawesome.com/your-code.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <div class="main-wrapper">
+      <div class="glass-card">
+        <header>
+          <div class="logo-icon"><i class="fas fa-car-side"></i></div>
+          <h1>Car Price <span>Predictor</span></h1>
+          <p>
+            Enter vehicle details to get a machine-learning powered valuation.
+          </p>
+        </header>
+
+        <form method="post" class="predict-form">
+          {% csrf_token %}
+
+          <div class="input-grid">
+            <div class="input-group">
+              <label>Mileage (Total Miles Covered)</label>
+              <input
+                type="number"
+                step="1"
+                name="mileage"
+                placeholder="e.g. 45000"
+                required
+              />
+            </div>
+
+            <div class="input-group">
+              <label>Engine Size (L)</label>
+              <input
+                type="number"
+                step="0.1"
+                name="engine_size"
+                placeholder="e.g. 2.0"
+                required
+              />
+            </div>
+
+            <div class="input-group">
+              <label>Car Age (Years)</label>
+              <input
+                type="number"
+                step="1"
+                name="car_age"
+                placeholder="e.g. 5"
+                required
+              />
+            </div>
+
+            <div class="input-group">
+              <label>Fuel Type</label>
+              <select name="fuel_type" required>
+                <option value="" disabled selected>Select Fuel</option>
+                <option value="Petrol">Petrol</option>
+                <option value="Diesel">Diesel</option>
+                <option value="Hybrid">Hybrid</option>
+                <option value="Electric">Electric</option>
+              </select>
+            </div>
+
+            <div class="input-group full-width">
+              <label>Manufacturer</label>
+              <select name="manufacturer" required>
+                <option value="" disabled selected>Select Brand</option>
+                <option value="Ford">Ford</option>
+                <option value="Toyota">Toyota</option>
+                <option value="Porsche">Porsche</option>
+                <option value="Honda">Honda</option>
+              </select>
+            </div>
+          </div>
+
+          <button type="submit" class="submit-btn">
+            <span>Predict Valuation</span>
+            <i class="fas fa-arrow-right"></i>
+          </button>
+        </form>
+
+        {% if prediction %}
+        <div class="result-card">
+          <div class="price-badge">
+            <small>Estimated Value</small>
+            <h2>₹ {{ prediction }}</h2>
+          </div>
+
+          <div class="details-summary">
+            <div class="detail-item">
+              <span>{{ submitted_data.manufacturer }}</span>
+              <label>Brand</label>
+            </div>
+            <div class="detail-item">
+              <span>{{ submitted_data.car_age }} yrs</span>
+              <label>Age</label>
+            </div>
+            <div class="detail-item">
+              <span>{{ submitted_data.fuel_type }}</span>
+              <label>Fuel</label>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        <p class="disclaimer">
+          Disclaimer: This price is an estimate based on UK car market data. INR
+          values are approximate conversions and do not represent Indian resale
+          prices.
+        </p>
+      </div>
+    </div>
+  </body>
+</html>
