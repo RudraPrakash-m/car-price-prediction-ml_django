@@ -25,7 +25,12 @@ SECRET_KEY = 'django-insecure-fgcs-227@)l+)iae1+l1@*ocf!=8_gh4d4752*8zq!1t$#t2ci
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "car-price-prediction-ml-django.onrender.com",
+    "localhost",
+    "127.0.0.1",
+]
+
 
 
 # Application definition
